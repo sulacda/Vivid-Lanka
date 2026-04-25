@@ -1,0 +1,23 @@
+# Pretty 404
+ErrorDocument 404 /vivid-lanka/404.php
+
+# Block direct access to includes & uploads scripts
+RewriteEngine On
+RewriteRule ^includes/    - [F,L]
+RewriteRule ^uploads/.*\.(php|phtml|phar|pl|py|cgi|sh)$ - [F,L]
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+<FilesMatch "\.(sql|md|log)$">
+  Require all denied
+</FilesMatch>
+
+<Files "config.php">
+  Require all denied
+</Files>
